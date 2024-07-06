@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Guess-The-Number/static/css/main.27bd388a.css",
+    "main.js": "/Guess-The-Number/static/js/main.467f41ba.js",
+    "static/js/453.80540418.chunk.js": "/Guess-The-Number/static/js/453.80540418.chunk.js",
+    "index.html": "/Guess-The-Number/index.html",
+    "main.27bd388a.css.map": "/Guess-The-Number/static/css/main.27bd388a.css.map",
+    "main.467f41ba.js.map": "/Guess-The-Number/static/js/main.467f41ba.js.map",
+    "453.80540418.chunk.js.map": "/Guess-The-Number/static/js/453.80540418.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.27bd388a.css",
+    "static/js/main.467f41ba.js"
+  ]
+}
