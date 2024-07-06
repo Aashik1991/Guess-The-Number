@@ -8,6 +8,7 @@ let max = 10;
 let random = getRandom(1, max);
 console.log(random)
 let win = false;
+let over = false;
 
 //component starts here
 const GuessTheNumber = () => {
@@ -20,10 +21,9 @@ const GuessTheNumber = () => {
   let handleChange = (event) => {
     if (event.target.value === '') {
       setGuessedNum('')
-      setMessage("Please Enter A Number")
       return
     }
-    setMessage("");
+    if (message !== "You Loose") setMessage("");
     let num = event.target.value;
     num = Number.parseInt(num)
     setGuessedNum(num)
@@ -31,45 +31,57 @@ const GuessTheNumber = () => {
   }
 
   let handleSubmit = () => {
-    setGuessedNum("")
-    setGuessCount(guessCount+1)
+    if (over === false) {
+      setGuessedNum("")
 
-    if (guessCount >= max) {
-      setMessage("You Lose")
-      return
-    }
+      if (number === 0 || guessedNum === "") {
+        setMessage("Please Enter A Number")
+      } else if (guessedNum === number) {
+        setMessage("Your guess is correct")
+        win = true;
+        over = true;
+      } else if (guessedNum < number) {
+        setMessage("Your guess is less than the number")
+      } else {
+        setMessage("Your guess is greater than the number")
+      }
+      setGuessCount(guessCount + 1)
 
-    if (number === 0 || guessedNum === "") {
-      setMessage("Please Enter A Number")
-    } else if (guessedNum === number) {
-      setMessage("Your guess is correct")
-      win = true;
-    } else if (guessedNum < number) {
-      setMessage("Your guess is less than the number")
-    } else {
-      setMessage("Your guess is greater than the number")
+      if (guessCount + 1 >= max && win === false) {
+        setMessage("You Loose")
+        over = true;
+        return
+      }
     }
   }
 
-  let handleRetry = ()=>{
+  let handleRetry = () => {
     random = getRandom(1, max);
     setGuessCount(0)
     win = false;
+    over = false;
     setMessage("")
     console.log(random)
   }
 
+  let grace = win ? 1 : 0;
+
   return (
     <div className="container">
       <div className="title">
-        This is a Guess The Number Game. <br /> The Number is between 1 to {max} <br /> Max try = 10
+        Guess The Number Game. <br /> The Number is between 1 to {max} <br /> Max try = 10
       </div>
-      {
-        message ? <div className="message"> {message}  <br />{win!=true?<span>Attempts : {guessCount}</span>:""}</div> : ''
-      }
-      {
-        win ? <div className="win"> Your Score : {max - guessCount} <br /> Attempts : {guessCount}</div> : ""
-      }
+      <div className="score">
+        {
+          message && <div className={win ? "message win" : "message"}> {message}</div>
+        }
+        {
+          over ? <div className="win"> Your Score = {max - guessCount + grace} <br /> Attempts = {guessCount}</div> : <div className="win">Attempts : {guessCount}</div>
+        }
+        {
+          (win === false && over) ? <div className="message win"> Number is = {random} </div> : ""
+        }
+      </div>
       <div className="content">
         <input type="number" name='number' onChange={handleChange} value={guessedNum} />
       </div>
